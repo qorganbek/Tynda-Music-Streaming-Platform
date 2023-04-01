@@ -52,7 +52,7 @@ class Song(models.Model):
         return f'{self.title} {self.id}'
 
     class Meta:
-        ordering = ['is_top', 'created_at']
+        ordering = ['is_top', '-created_at']
         verbose_name = _('Song')
         verbose_name_plural = _('Songs')
 
