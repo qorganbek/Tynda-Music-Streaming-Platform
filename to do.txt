@@ -1,7 +1,4 @@
 CustomUser with JWT
-Filters
 Pagination
 Permission
-Favorite Songs
-Playlist
-Docker
+Models: Favorite Songs, Playlist
