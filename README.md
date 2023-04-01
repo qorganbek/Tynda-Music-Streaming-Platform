@@ -1,1 +1,1 @@
-# Tynda-Music-Streaming-Platform
+# Tyñda Music Streaming Platform
