@@ -2,4 +2,6 @@ CustomUser with JWT
 Filters
 Pagination
 Permission
-And Realize serializers artist and category
+Favorite Songs
+Playlist
+Docker

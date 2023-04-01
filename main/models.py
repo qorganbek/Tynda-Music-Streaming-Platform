@@ -39,8 +39,8 @@ class Artist(models.Model):
 class Song(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     title = models.CharField(max_length=100, unique=True, verbose_name=_('Title'))
-    artist = models.ManyToManyField(to=Artist, related_name='artist', verbose_name=_('Artists'))
-    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='category', verbose_name=_('Categories'))
+    artist = models.ManyToManyField(to=Artist, related_name='song', verbose_name=_('Artists'))
+    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='song', verbose_name=_('Categories'))
     image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Image'))
     audio = models.FileField(upload_to='audios/%Y/%m/%d/', verbose_name=_('Audio File'))
     is_top = models.BooleanField(verbose_name=_('Is Top ?'))
