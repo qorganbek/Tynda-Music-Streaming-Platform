@@ -1,0 +1,9 @@
+<h1>Songs</h1>
+
+<div *ngFor="let song of data">
+  <h1>{{song.title}}</h1>
+  <img src="{{song.image}}" alt="img" style="width: 100px;">
+  <audio src="{{song.audio}}" controls></audio>
+</div>
+
+<!--<h3 *ngIf="!loaded">Songs list is loaded ... </h3>-->
