@@ -28,3 +28,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
+
+    class Meta:
+        verbose_name = 'User'

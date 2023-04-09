@@ -1,4 +1,2 @@
-CustomUser with JWT
-Pagination
 Permission
 Models: Favorite Songs, Playlist

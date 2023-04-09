@@ -30,3 +30,9 @@ class FavoriteFilter(f.FilterSet):
     class Meta:
         model = models.Favorite
         fields = '__all__'
+
+
+class PlaylistFilter(f.FilterSet):
+    class Meta:
+        model = models.Playlist
+        fields = '__all__'

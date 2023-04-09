@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from users.models import CustomUser
 
+
 class Category(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(max_length=25, verbose_name=_('Category name'))
@@ -40,7 +41,8 @@ class Song(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     title = models.CharField(max_length=100, unique=True, verbose_name=_('Title'))
     artist = models.ManyToManyField(to=Artist, related_name='song', verbose_name=_('Artists'))
-    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='song', verbose_name=_('Categories'))
+    category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='song',
+                                 verbose_name=_('Categories'))
     image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Image'))
     audio = models.FileField(upload_to='audios/%Y/%m/%d/', verbose_name=_('Audio File'))
     is_top = models.BooleanField(verbose_name=_('Is Top ?'))
@@ -59,9 +61,19 @@ class Song(models.Model):
 
 class Favorite(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
-    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE, related_name='favorite_list')
+    user = models.OneToOneField(to=CustomUser, on_delete=models.CASCADE, related_name='favorite_list')
     song = models.ManyToManyField(to=Song, related_name='song')
 
     def __str__(self):
-        return f'{self.user.username}s Favorite Songs'
+        return f'{self.user.username}\'s Favorite Songs'
 
+
+class Playlist(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    name = models.CharField(max_length=50)
+    user = models.ForeignKey(to=CustomUser, on_delete=models.CASCADE, related_name='play_list')
+    song = models.ManyToManyField(to=Song, related_name='song_playlist')
+    category = models.ForeignKey(to=Category, related_name='playlist_category', on_delete=models.CASCADE, blank=True)
+
+    def __str__(self):
+        return f'{self.name}'

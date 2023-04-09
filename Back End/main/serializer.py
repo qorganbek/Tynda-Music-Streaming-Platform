@@ -34,3 +34,11 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Favorite
         fields = '__all__'
+
+
+class PlaylistSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+
+    class Meta:
+        model = models.Playlist
+        fields = '__all__'

@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     # my app
     'users',
     'main',
-
     # additional packages
+    'rest_framework_simplejwt',
     'rest_framework',
     'django_filters',
     'debug_toolbar',
@@ -138,7 +138,8 @@ INTERNAL_IPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication'],
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'
