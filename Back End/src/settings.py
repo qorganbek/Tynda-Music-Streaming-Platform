@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     'users',
     'main',
     # additional packages
-    'rest_framework_simplejwt',
     'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
     'django_filters',
     'debug_toolbar',
     'django_cleanup.apps.CleanupConfig',

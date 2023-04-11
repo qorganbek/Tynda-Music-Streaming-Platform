@@ -2,14 +2,12 @@ from django.shortcuts import render
 from . import filters
 from rest_framework.viewsets import ModelViewSet
 from . import models, serializer
-from rest_framework.permissions import IsAuthenticated
 
 
 class SongModelViewSet(ModelViewSet):
     queryset = models.Song.objects.select_related('category')
     serializer_class = serializer.SongSerializer
     filterset_class = filters.SongFilter
-    # permission_classes = [IsAuthenticated]
 
 
 class ArtistModelViewSet(ModelViewSet):
