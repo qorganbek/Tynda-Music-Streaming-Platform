@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Song, SONGS} from "../song";
+import {Song} from "../song";
 import {SongService} from "../song.service";
 
 @Component({
@@ -7,20 +7,20 @@ import {SongService} from "../song.service";
   templateUrl: './songs.component.html',
   styleUrls: ['./songs.component.css']
 })
-export class SongsComponent implements OnInit{
+export class SongsComponent  implements OnInit{
   data: Song[];
   loaded: boolean;
 
-  constructor(private service:SongService) {
+  constructor(private service: SongService)  {
     this.data = [];
     this.loaded = true;
   }
 
-  ngOnInit(){
+  ngOnInit(): void{
     this.getSongs()
   }
 
-  getSongs(){
+  getSongs(): void {
     this.loaded = false;
     this.service.getSongs().subscribe((song) => {
       this.data = song;
