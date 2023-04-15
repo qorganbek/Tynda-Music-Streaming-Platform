@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,15 +36,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # my app
-    'users',
+    # 'users',
+    # 'accounts',
     'main',
     # additional packages
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework.authtoken',
     'drf_yasg',
     'django_filters',
     'debug_toolbar',
     'django_cleanup.apps.CleanupConfig',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -56,7 +59,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:4200", ]
 
 ROOT_URLCONF = 'src.urls'
 
@@ -81,14 +88,21 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'tyndaapp2',
+#         'USER': 'admin',
+#         'PASSWORD': '123456789',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tyndaapp2',
-        'USER': 'admin',
-        'PASSWORD': '123456789',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -143,7 +157,12 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication'],
 }
 
-AUTH_USER_MODEL = 'users.CustomUser'
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=300),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
+
+# AUTH_USER_MODEL = 'accounts.CustomUser'
 
 SWAGGER_SETTINGS = {
    'SECURITY_DEFINITIONS': {

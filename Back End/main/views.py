@@ -3,6 +3,7 @@ from . import filters
 from rest_framework.viewsets import ModelViewSet
 from . import models, serializer
 from . import permissions
+from rest_framework import permissions as rest_permissions
 
 
 class SongModelViewSet(ModelViewSet):
@@ -30,7 +31,7 @@ class FavoriteModelViewSet(ModelViewSet):
     queryset = models.Favorite.objects.all()
     serializer_class = serializer.FavoriteSerializer
     filterset_class = filters.FavoriteFilter
-    permission_classes = (permissions.FavoritePermission,)
+    permission_classes = (rest_permissions.DjangoObjectPermissions,)
 
 
 class PlaylistModelViewSet(ModelViewSet):
