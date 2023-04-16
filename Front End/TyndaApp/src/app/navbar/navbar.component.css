@@ -1,5 +1,4 @@
-ul{
-  justify-content: center;
-  display: flex;
-  gap: 60px;
+.navbar-container{
+  background-color: black;
+  height: 100vh;
 }

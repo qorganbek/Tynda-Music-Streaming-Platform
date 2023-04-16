@@ -1,0 +1,21 @@
+.home-container{
+  height: 100vh;
+  background-color: #222626;
+}
+
+.album_card{
+  text-align: center;
+  width: 170px;
+  height: 210px;
+}
+
+.all_album {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-container{
+  background-color: black;
+  height: 100vh;
+}
+
