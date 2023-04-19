@@ -1,3 +1,4 @@
+from django.urls import path
 from rest_framework import routers
 from main import views
 
@@ -13,4 +14,10 @@ r.register(r'favorite', views.FavoriteModelViewSet)
 
 r.register(r'playlist', views.PlaylistModelViewSet)
 
-urlpatterns = r.urls
+urlpatterns = [
+    path('users/create/', views.CreateUserViewSet.as_view({'post': 'create_user'}))
+]
+
+urlpatterns += r.urls
+
+

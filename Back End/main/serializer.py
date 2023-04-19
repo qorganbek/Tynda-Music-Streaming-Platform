@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from . import models
 
@@ -12,7 +13,7 @@ class SongSerializer(serializers.ModelSerializer):
 
 class ArtistSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
-    song = SongSerializer(read_only=True, many=True)
+    # song = SongSerializer(read_only=True)
 
     class Meta:
         model = models.Artist
@@ -21,7 +22,7 @@ class ArtistSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
-    song = SongSerializer(read_only=True, many=True)
+    # song = SongSerializer(read_only=True, many=True)
 
     class Meta:
         model = models.Category
@@ -30,6 +31,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class FavoriteSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
+    # song = SongSerializer(read_only=True, many=True)
 
     class Meta:
         model = models.Favorite
@@ -38,7 +40,16 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
 class PlaylistSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
+    # song = SongSerializer(read_only=True, many=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault)
 
     class Meta:
         model = models.Playlist
         fields = '__all__'
+
+
+class CreateUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'email', 'password')

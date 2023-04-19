@@ -1,9 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import render
+from rest_framework.response import Response
+
 from . import filters
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ViewSet
 from . import models, serializer
 from . import permissions
-from rest_framework import permissions as rest_permissions
+from rest_framework import permissions as rest_permissions, status
 
 
 class SongModelViewSet(ModelViewSet):
@@ -38,6 +41,17 @@ class PlaylistModelViewSet(ModelViewSet):
     queryset = models.Playlist.objects.all()
     serializer_class = serializer.PlaylistSerializer
     filterset_class = filters.PlaylistFilter
+    permission_classes = (rest_permissions.IsAdminUser,)
+
+
+class CreateUserViewSet(ViewSet):
+
+    def create_user(self, request, **kwargs):
+        ser = serializer.CreateUserSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        model = get_user_model()
+        model.objects.create(**ser.validated_data)
+        return Response({'message': 'created'}, status=status.HTTP_201_CREATED)
 
 
 def MainPage(request):

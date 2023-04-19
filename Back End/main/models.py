@@ -1,8 +1,7 @@
 import uuid
-
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from accounts import models as UserModel
 
 
 class Category(models.Model):
@@ -62,17 +61,17 @@ class Song(models.Model):
 
 class Favorite(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
-    user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, related_name='favorite_list')
+    user = models.OneToOneField(to=UserModel.CustomUser, on_delete=models.PROTECT, related_name='favorite_list')
     song = models.ManyToManyField(to=Song, related_name='song')
 
     def __str__(self):
-        return f'{self.user.username}\'s Favorite Songs'
+        return f'{self.user.email}\'s Favorite Songs'
 
 
 class Playlist(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(max_length=50)
-    user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE, related_name='play_list')
+    user = models.ForeignKey(to=UserModel.CustomUser, on_delete=models.PROTECT, related_name='play_list')
     song = models.ManyToManyField(to=Song, related_name='song_playlist')
     category = models.ForeignKey(to=Category, related_name='playlist_category', on_delete=models.CASCADE, blank=True)
 
