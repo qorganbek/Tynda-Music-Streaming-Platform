@@ -1,0 +1,9 @@
+{% block subject %} Welcome Tynda Music Streaming Platform {% endblock %}
+{% block plain %}
+  Hi,
+
+  You just signed up for my website, using:
+      email: {{email}}
+
+  Thanks, you rock!
+{% endblock %}
