@@ -48,6 +48,14 @@ class PlaylistSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class LibrarySerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+
+    class Meta:
+        model = models.MyLibrary
+        fields = '__all__'
+
+
 class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
