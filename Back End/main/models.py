@@ -43,11 +43,11 @@ class Artist(models.Model):
 class Song(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     title = models.CharField(max_length=100, unique=True, verbose_name=_('Title'))
-    artist = models.ManyToManyField(to=Artist, related_name='song', verbose_name=_('Artists'))
+    artist = models.ForeignKey(to=Artist, related_name='song', on_delete=models.CASCADE)
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='song',
                                  verbose_name=_('Categories'))
-    image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Image'))
-    audio = models.FileField(upload_to='audios/%Y/%m/%d/', verbose_name=_('Audio File'))
+    image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Image'), blank=True, null=True)
+    audio = models.FileField(upload_to='audios/%Y/%m/%d/', verbose_name=_('Audio File'), blank=True, null=True)
     is_top = models.BooleanField(verbose_name=_('Is Top ?'))
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -86,3 +86,6 @@ class MyLibrary(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, related_name='library')
     playlist = models.ManyToManyField(to=Playlist, related_name='my_library')
+
+    def __str__(self):
+        return f'{self.user} libraries'
