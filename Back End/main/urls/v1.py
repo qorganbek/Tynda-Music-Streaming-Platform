@@ -14,6 +14,8 @@ r.register(r'favorite', views.FavoriteModelViewSet)
 
 r.register(r'playlist', views.PlaylistModelViewSet)
 
+r.register(r'library', views.LibraryModelViewSet)
+
 urlpatterns = [
     path('users/create/', views.CreateUserViewSet.as_view({'post': 'create_user'}))
 ]
