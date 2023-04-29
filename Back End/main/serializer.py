@@ -13,7 +13,7 @@ class SongSerializer(serializers.ModelSerializer):
 
 class ArtistSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
-    # song = SongSerializer(read_only=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = models.Artist
@@ -22,7 +22,6 @@ class ArtistSerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
-    # song = SongSerializer(read_only=True, many=True)
 
     class Meta:
         model = models.Category
@@ -31,33 +30,42 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class FavoriteSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
-    # song = SongSerializer(read_only=True, many=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = models.Favorite
         fields = '__all__'
 
 
+class ListFavoriteSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+
+    class Meta:
+        model = models.Favorite
+        fields = ('id', 'user',)
+
+
 class PlaylistSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
-    # song = SongSerializer(read_only=True, many=True)
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = models.Playlist
         fields = '__all__'
 
 
-class LibrarySerializer(serializers.ModelSerializer):
+class ListLibrarySerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
 
     class Meta:
         model = models.MyLibrary
-        fields = '__all__'
+        fields = ('id', 'user')
 
 
-class CreateUserSerializer(serializers.ModelSerializer):
+class LibrarySerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
-        model = get_user_model()
-        fields = ('username', 'email', 'password')
+        model = models.MyLibrary
+        fields = '__all__'
