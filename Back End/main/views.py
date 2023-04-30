@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from . import filters
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ViewSet
 from . import models, serializer, services
 from . import permissions
 
@@ -12,7 +12,7 @@ class SongModelViewSet(ModelViewSet):
     queryset = models.Song.objects.select_related('category')
     serializer_class = serializer.SongSerializer
     filterset_class = filters.SongFilter
-
+    permission_classes = (permissions.SongPermission, )
 
 
 class ArtistModelViewSet(ModelViewSet):
@@ -58,32 +58,57 @@ class PlaylistModelViewSet(ModelViewSet):
     permission_classes = (permissions.PlayListPermission,)
 
 
-@api_view(['POST'])
-@swagger_auto_schema(request_body=serializer.SongSerializer)
-def CreateSong(request, *args, **kwargs):
+# @api_view(['POST'])
+# @swagger_auto_schema(request_body=serializer.SongSerializer)
+# def CreateSong(request, *args, **kwargs):
+#     service: services.SongServiceInterface = services.SongServiceV1()
+#
+#     ser = serializer.SongSerializer(data=request.data)
+#     ser.is_valid(raise_exception=True)
+#
+#     if ser.validated_data['artist'].user != request.user:
+#         print(ser.validated_data['artist'].user)
+#         return Response({'message': 'artist user not equal your user!'}, status=404)
+#
+#     data = service.create_song(data=ser.validated_data)
+#
+#     return Response(data, status=201)
+#
+#
+# @api_view(['POST'])
+# @swagger_auto_schema(request_body=serializer.VerifySongSerializer)
+# def VerifySong(request, *args, **kwargs):
+#     service: services.SongServiceInterface = services.SongServiceV1()
+#
+#     ser = serializer.VerifySongSerializer(data=request.data)
+#     ser.is_valid(raise_exception=True)
+#     service.verify_song(data=ser.validated_data)
+#     return Response(ser.validated_data, status=201)
+
+
+class SongViewSet(ViewSet):
     service: services.SongServiceInterface = services.SongServiceV1()
+    permission_classes = (permissions.SongPermission,)
 
-    ser = serializer.SongSerializer(data=request.data)
-    ser.is_valid(raise_exception=True)
+    @swagger_auto_schema(request_body=serializer.SongSerializer)
+    def create_song(self, request, *args, **kwargs):
+        ser = serializer.SongSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
 
-    if ser.validated_data['artist'].user != request.user:
-        print(ser.validated_data['artist'].user)
-        return Response({'message': 'artist user not equal your user!'}, status=404)
+        if ser.validated_data['artist'].user != request.user:
+            print(ser.validated_data['artist'].user)
+            return Response({'message': 'artist user not equal your user!'}, status=404)
 
-    data = service.create_song(data=ser.validated_data)
+        data = self.service.create_song(data=ser.validated_data)
 
-    return Response(data, status=201)
+        return Response(data, status=201)
 
-
-@api_view(['POST'])
-@swagger_auto_schema(request_body=serializer.VerifySongSerializer)
-def VerifySong(request, *args, **kwargs):
-    service: services.SongServiceInterface = services.SongServiceV1()
-
-    ser = serializer.VerifySongSerializer(data=request.data)
-    ser.is_valid(raise_exception=True)
-    service.verify_song(data=ser.validated_data)
-    return Response(ser.validated_data, status=201)
+    @swagger_auto_schema(request_body=serializer.VerifySongSerializer)
+    def verify_song(self, request, *args, **kwargs):
+        ser = serializer.VerifySongSerializer(data=request.data)
+        ser.is_valid(raise_exception=True)
+        self.service.verify_song(data=ser.validated_data)
+        return Response(ser.validated_data, status=201)
 
 
 '''
