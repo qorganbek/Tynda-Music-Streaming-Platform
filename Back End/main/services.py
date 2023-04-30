@@ -15,7 +15,7 @@ class SongServiceInterface(Protocol):
 
 
 class SongServiceV1:
-    repos: repos.SongReposInterface = repos.SongReposV1()
+    repo: repos.SongReposInterface = repos.SongReposV1()
 
     def create_song(self, data: OrderedDict) -> dict:
         session_id = self._verify_email(data=data)
@@ -30,10 +30,12 @@ class SongServiceV1:
         if not song_data:
             return
 
-        if data['code'] != song_data['code']:
+        code_new = song_data.pop('code')
+
+        if data['code'] != code_new:
             return
 
-        self.repos.create_song(data=song_data)
+        self.repo.create_song(data=song_data)
 
     def _verify_email(self, data: OrderedDict) -> str:
         code = self._generate_code()
