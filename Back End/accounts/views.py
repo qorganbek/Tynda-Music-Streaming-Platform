@@ -1,3 +1,4 @@
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
@@ -9,6 +10,7 @@ from templated_email import send_templated_mail
 
 class UserViewSet(ViewSet):
 
+    @swagger_auto_schema(request_body=serializers.CreateUserSerializer)
     def create_user(self, request, *args, **kwargs):
         serializer = serializers.CreateUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
