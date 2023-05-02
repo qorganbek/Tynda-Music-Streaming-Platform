@@ -28,12 +28,12 @@ class SongServiceV1:
         song_data = cache.get(data['session_id'])
 
         if not song_data:
-            return
+            raise ValueError('Session ID not correct')
 
         code_new = song_data.pop('code')
 
         if data['code'] != code_new:
-            return
+            raise ValueError('Code not correct')
 
         self.repo.create_song(data=song_data)
 
