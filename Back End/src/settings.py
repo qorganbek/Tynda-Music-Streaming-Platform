@@ -57,7 +57,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:4200", ]
+CORS_ALLOWED_ORIGINS = ["http://localhost:4200"]
 
 ROOT_URLCONF = 'src.urls'
 
@@ -195,3 +195,12 @@ DJOSER = {
     'USERNAME_RESET_CONFIRM_RETYPE': False,
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}

@@ -45,7 +45,7 @@ class Song(models.Model):
     title = models.CharField(max_length=100, unique=True, verbose_name=_('Title'))
     artist = models.ForeignKey(to=Artist, related_name='song', on_delete=models.CASCADE)
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='song',
-                                 verbose_name=_('Categories'))
+                                 verbose_name=_('Categories'), blank=True, null=True)
     image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Image'), blank=True, null=True)
     audio = models.FileField(upload_to='audios/%Y/%m/%d/', verbose_name=_('Audio File'), blank=True, null=True)
     is_top = models.BooleanField(verbose_name=_('Is Top ?'))
@@ -67,6 +67,9 @@ class Favorite(models.Model):
     user = models.OneToOneField(to=UserModel.CustomUser, on_delete=models.PROTECT, related_name='favorite_list')
     song = models.ManyToManyField(to=Song, related_name='song')
 
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
     def __str__(self):
         return f'{self.user.email}\'s Favorite Songs'
 
@@ -77,6 +80,10 @@ class Playlist(models.Model):
     user = models.ForeignKey(to=UserModel.CustomUser, on_delete=models.PROTECT, related_name='play_list')
     song = models.ManyToManyField(to=Song, related_name='song_playlist')
     category = models.ForeignKey(to=Category, related_name='playlist_category', on_delete=models.CASCADE, blank=True)
+    image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name=_('Image'), blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -86,6 +93,9 @@ class MyLibrary(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, related_name='library')
     playlist = models.ManyToManyField(to=Playlist, related_name='my_library')
+
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
         return f'{self.user} libraries'

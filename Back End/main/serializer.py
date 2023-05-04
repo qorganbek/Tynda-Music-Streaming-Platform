@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from . import models
 
@@ -9,6 +8,11 @@ class SongSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Song
         fields = '__all__'
+
+
+class VerifySongSerializer(serializers.Serializer):
+    session_id = serializers.UUIDField()
+    code = serializers.CharField(max_length=4)
 
 
 class ArtistSerializer(serializers.ModelSerializer):
@@ -48,6 +52,16 @@ class ListFavoriteSerializer(serializers.ModelSerializer):
 class PlaylistSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    class Meta:
+        model = models.Playlist
+        fields = '__all__'
+
+
+class PlaylistRetrieveSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    song = SongSerializer(many=True)
 
     class Meta:
         model = models.Playlist
