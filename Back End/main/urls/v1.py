@@ -16,7 +16,11 @@ r.register(r'playlist', views.PlaylistModelViewSet)
 
 r.register(r'library', views.LibraryModelViewSet)
 
+urlpatterns = [
+    path('song/create/', views.SongViewSet.as_view({'post': 'create_song'})),
+    path('song/verify/', views.SongViewSet.as_view({'post': 'verify_song'})),
+]
 
-urlpatterns = r.urls
+urlpatterns += r.urls
 
 

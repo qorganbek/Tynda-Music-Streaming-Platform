@@ -1,0 +1,10 @@
+{% block subject %} Tynda Music Streaming Platform {% endblock %}
+{% block plain %}
+  Hi,
+
+  You have uploaded a song to our platform for this email: {{email}}
+  in order to accept your request, you need to send a code
+  This is your code: {{code}}
+
+  Thanks, you rock!
+{% endblock %}
