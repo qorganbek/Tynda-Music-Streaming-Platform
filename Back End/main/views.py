@@ -54,6 +54,11 @@ class PlaylistModelViewSet(ModelViewSet):
     filterset_class = filters.PlaylistFilter
     permission_classes = (permissions.PlayListPermission,)
 
+    def get_serializer_class(self):
+        if self.action == 'retrieve':
+            return serializer.RetrievePlaylistSerializer
+        return serializer.PlaylistSerializer
+
 
 @api_view(['POST'])
 @swagger_auto_schema(request_body=serializer.SongSerializer)

@@ -58,6 +58,16 @@ class PlaylistSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class RetrievePlaylistSerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    song = SongSerializer(many=True)
+
+    class Meta:
+        model = models.Playlist
+        fields = '__all__'
+
+
 class ListLibrarySerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
 
