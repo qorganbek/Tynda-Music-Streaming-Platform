@@ -4,6 +4,7 @@ from . import models
 
 class SongSerializer(serializers.ModelSerializer):
     id = serializers.UUIDField(read_only=True)
+    status = serializers.CharField(max_length=25, read_only=True)
 
     class Meta:
         model = models.Song
@@ -83,3 +84,13 @@ class LibrarySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.MyLibrary
         fields = '__all__'
+
+
+class RetrieveLibrarySerializer(serializers.ModelSerializer):
+    id = serializers.UUIDField(read_only=True)
+    playlist = RetrievePlaylistSerializer(many=True)
+
+    class Meta:
+        model = models.MyLibrary
+        fields = "__all__"
+

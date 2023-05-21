@@ -1,5 +1,5 @@
 media
 db.sqlite3
-to do.txt
 .env
 .idea
+dump.rdb

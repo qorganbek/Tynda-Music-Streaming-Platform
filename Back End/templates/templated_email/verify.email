@@ -1,0 +1,4 @@
+{% block subject %} Tynda Music Streaming Platform {% endblock %}
+{% block plain %}
+  Hi, you are registered on Tynda Music, your confirmation code: {{code}}
+{% endblock %}

@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from . import choices
 
 
 class CustomUserManager(BaseUserManager):
@@ -35,6 +36,7 @@ class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     username = models.CharField(blank=True, null=True, max_length=50)
     email = models.EmailField(verbose_name=_("Email"), unique=True)
+    user_type = models.CharField(max_length=20, choices=choices.UserType.choices)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = CustomUserManager()

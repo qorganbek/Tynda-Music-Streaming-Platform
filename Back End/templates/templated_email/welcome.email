@@ -3,7 +3,9 @@
   Hi,
 
   You just signed up for my website, using:
+      ID: {{id}}
       email: {{email}}
+
 
   Thanks, you rock!
 {% endblock %}
