@@ -141,9 +141,7 @@ class PlaylistModelViewSet(ModelViewSet):
 #         return Response(ser.validated_data, status=201)
 
 
-#  download
-#  role
 #  channel with websocket
+#  account reset password and another fixtures
 #  presentation
-#  video
-#  sb defence
+#  video +-

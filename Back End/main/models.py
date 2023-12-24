@@ -103,10 +103,3 @@ class MyLibrary(models.Model):
 
     def __str__(self):
         return f'{self.user} libraries'
-
-# class MusicForPlaylist(models.Model):
-#     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
-#     song = models.ForeignKey(to=Song, related_name='player_song', on_delete=models.CASCADE)
-#
-#     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-#     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
